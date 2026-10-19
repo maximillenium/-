@@ -1,0 +1,6 @@
+{
+  "name": "Центр БиоСтоматологии",
+  "description": "Официальный сайт стоматологической клиники Центр БиоСтоматологии у м. Марьина Роща в Москве. Запись на приём, прейскурант, услуги, врачи и отзывы.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

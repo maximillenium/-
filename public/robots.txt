@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cbstom.ru/sitemap.xml
+Host: https://cbstom.ru

@@ -1,0 +1,103 @@
+# ========================================================
+# Beget Apache Configuration for cbstom.ru SPA & API
+# ========================================================
+
+# Enable UTF-8 encoding
+AddDefaultCharset UTF-8
+
+# Prevent directory browsing
+Options -Indexes
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Caching for static assets (CSS, JS, Images, Fonts)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Gzip / Deflate compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Deny access to sensitive files (logs, config, env, backups)
+<FilesMatch "(\.(log|env|ini|bak|tmp|sql|sh|config|sample)|requests_backup.*|\.ht.*)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Allow public robots.txt and sitemap.xml
+<Files "robots.txt">
+    Order allow,deny
+    Allow from all
+</Files>
+<Files "sitemap.xml">
+    Order allow,deny
+    Allow from all
+</Files>
+
+# Rewrite Engine & SPA Routing
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # HTTPS Redirect (recommended for production on Beget with Let's Encrypt SSL)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} ^(www\.)?cbstom\.ru$ [NC]
+    RewriteRule ^ https://cbstom.ru%{REQUEST_URI} [R=301,L]
+
+    # 301 SEO Redirects from legacy website URLs to new pages
+    RewriteRule ^uslugi/?$ /services [R=301,L]
+    RewriteRule ^uslugi/(.*)$ /services [R=301,L]
+    RewriteRule ^services\.html$ /services [R=301,L]
+    RewriteRule ^tseny/?$ /prices [R=301,L]
+    RewriteRule ^price/?$ /prices [R=301,L]
+    RewriteRule ^stoimost/?$ /prices [R=301,L]
+    RewriteRule ^prices\.html$ /prices [R=301,L]
+    RewriteRule ^o-klinike/?$ /about [R=301,L]
+    RewriteRule ^about-us/?$ /about [R=301,L]
+    RewriteRule ^about\.html$ /about [R=301,L]
+    RewriteRule ^kontakty/?$ /contacts [R=301,L]
+    RewriteRule ^contact/?$ /contacts [R=301,L]
+    RewriteRule ^contacts\.html$ /contacts [R=301,L]
+    RewriteRule ^vrachi/?$ /#doctors [R=301,L]
+    RewriteRule ^specialisty/?$ /#doctors [R=301,L]
+    RewriteRule ^otzyvy/?$ /#reviews [R=301,L]
+    RewriteRule ^privacy/?$ /privacy-policy [R=301,L]
+    RewriteRule ^policy/?$ /privacy-policy [R=301,L]
+
+    # Route /api/sendmail directly to api/sendmail.php
+    RewriteRule ^api/sendmail/?$ api/sendmail.php [L]
+
+    # Allow direct execution of PHP scripts in api folder
+    RewriteCond %{REQUEST_URI} ^/api/ [NC]
+    RewriteRule ^api/(.*)$ api/$1 [L]
+
+    # Don't rewrite real files or directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Fallback all other requests to index.html for React SPA routing
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# Custom error pages
+ErrorDocument 404 /index.html

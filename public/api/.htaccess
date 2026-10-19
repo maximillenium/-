@@ -1,0 +1,7 @@
+# Protect API folder from direct file browsing and downloads
+Options -Indexes
+
+<FilesMatch "\.(log|txt|tmp|bak|json|ini|env|sample)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

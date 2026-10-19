@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --radius: 0.625rem;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.18 0.03 260);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.18 0.03 260);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.18 0.03 260);
+    --primary: oklch(0.24 0.06 260);
+    --primary-foreground: oklch(0.99 0 0);
+    --primary-soft: oklch(0.96 0.015 260);
+    --gold: oklch(0.72 0.12 75);
+    --gold-foreground: oklch(0.18 0.03 260);
+    --secondary: oklch(0.97 0.01 260);
+    --secondary-foreground: oklch(0.24 0.06 260);
+    --muted: oklch(0.97 0.01 260);
+    --muted-foreground: oklch(0.5 0.02 260);
+    --accent: oklch(0.95 0.03 75);
+    --accent-foreground: oklch(0.4 0.1 75);
+    --surface: oklch(0.985 0.005 260);
+    --hero-bg: oklch(1 0 0);
+    --navy: oklch(0.22 0.05 260);
+    --navy-deep: oklch(0.18 0.04 260);
+    --cta-from: oklch(0.22 0.05 260);
+    --cta-to: oklch(0.18 0.04 260);
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.984 0.003 247.858);
+    --border: oklch(0.91 0.01 260);
+    --input: oklch(0.91 0.01 260);
+    --ring: oklch(0.72 0.12 75);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  .font-serif {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  }
+}
+
+/* Custom utility colors */
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.text-surface {
+  color: var(--surface);
+}
+
+.bg-card {
+  background-color: var(--card);
+}
+
+.bg-background {
+  background-color: var(--background);
+}
+
+.text-foreground {
+  color: var(--foreground);
+}
+
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+
+.border-border {
+  border-color: var(--border);
+}
+
+.bg-muted {
+  background-color: var(--muted);
+}
